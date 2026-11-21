@@ -8,6 +8,24 @@
 
     <p class="TswaNow" id="tswaNow" hidden></p>
 
+    <div class="TswaLoc" id="tswaLoc" hidden>
+        <p class="TswaLocMsg" id="tswaLocMsg" aria-live="polite">The demo starts with
+           Adelaide's temperature, because that is where TSWA is made. Somewhere else?</p>
+        <p class="TswaLocBtns">
+            <button class="TswaLocBtn" id="tswaGeoBtn" type="button">Use my location</button>
+            <button class="TswaLocBtn" id="tswaPickBtn" type="button">Choose a place</button>
+        </p>
+        <div id="tswaLocPick" hidden>
+            <input class="TswaLocInput" id="tswaLocInput" type="text"
+                   placeholder="Search for a city or town" autocomplete="off"
+                   aria-label="Search for a city or town">
+            <div class="TswaLocResults" id="tswaLocResults"></div>
+        </div>
+        <p class="TswaLocNote">Your place is remembered in this browser only. Its
+           coordinates go to Open-Meteo to fetch the weather. This website's server
+           receives and stores none of it.</p>
+    </div>
+
     <div class="TswaPanel">
         <h2>Try it — this is the app's converter, live in your browser</h2>
         <button class="TswaDemoTemp" id="demoTemp" type="button"
@@ -150,6 +168,7 @@
     var baseC = 23.6;   // Adelaide now-ish, until the live fetch lands
     var scale = 0;
     var jog = 0;
+    var userTouched = false;   // visitor is playing; stop reseeding under them
 
     var tempEl = document.getElementById("demoTemp");
     var titleEl = document.getElementById("demoVerdictTitle");
@@ -190,10 +209,12 @@
     }
 
     tempEl.addEventListener("click", function () {
+        userTouched = true;
         scale = (scale + 1) % SCALES.length;
         render();
     });
     slider.addEventListener("input", function () {
+        userTouched = true;
         jog = Number(slider.value) * 0.2;
         render();
     });
@@ -208,6 +229,7 @@
         b.className = "TswaChip";
         b.textContent = chip[0];
         b.addEventListener("click", function () {
+            userTouched = true;
             baseC = chip[1];
             slider.value = "0";
             jog = 0;
@@ -217,25 +239,172 @@
     });
     render();
 
-    // Adelaide right now, from the same free feed the app uses.
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=-34.9285&longitude=138.6007" +
-          "&current=temperature_2m&timezone=Australia%2FAdelaide")
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-            var t = data && data.current && data.current.temperature_2m;
-            if (typeof t !== "number") { return; }
-            baseC = t;
-            jog = 0;
-            slider.value = "0";
-            render();
-            var f = (t * 9 / 5 + 32).toFixed(1);
-            var el = document.getElementById("tswaNow");
-            if (el) {
-                el.textContent = "Adelaide right now: " + t.toFixed(1) + "°C — that is " +
-                                 f + "°F in American. The demo below is set to it.";
-                el.hidden = false;
+    // Where the demo's weather comes from. Adelaide is the default, because
+    // it is TSWA's home; the location bar lets a visitor switch the demo to
+    // their own sky, and the choice is remembered in this browser only.
+    // Mirrors the app: geolocation if allowed, place search otherwise.
+    var ADELAIDE = { name: "Adelaide", lat: -34.9285, lon: 138.6007, src: "default" };
+    var place = ADELAIDE;
+    var nowEl = document.getElementById("tswaNow");
+    var locBar = document.getElementById("tswaLoc");
+    var locMsg = document.getElementById("tswaLocMsg");
+    var geoBtn = document.getElementById("tswaGeoBtn");
+    var pickBtn = document.getElementById("tswaPickBtn");
+    var pickBox = document.getElementById("tswaLocPick");
+    var locInput = document.getElementById("tswaLocInput");
+    var locResults = document.getElementById("tswaLocResults");
+    if (locBar) { locBar.hidden = false; }
+
+    function say(msg) {
+        if (locMsg) { locMsg.textContent = msg; }
+    }
+
+    function savePlace() {
+        try {
+            localStorage.setItem("tswa.place", JSON.stringify(place));
+        } catch (e) { /* private mode: the choice lasts for this visit */ }
+    }
+
+    function loadPlace() {
+        try {
+            var raw = localStorage.getItem("tswa.place");
+            if (!raw) { return null; }
+            var p = JSON.parse(raw);
+            if (p && typeof p.lat === "number" && typeof p.lon === "number" &&
+                typeof p.name === "string") {
+                return p;
             }
-        })
-        .catch(function () { /* stay with the now-ish default */ });
+        } catch (e) { /* fall through to Adelaide */ }
+        return null;
+    }
+
+    function showWeather() {
+        fetch("https://api.open-meteo.com/v1/forecast?latitude=" + place.lat +
+              "&longitude=" + place.lon +
+              "&current=temperature_2m&timezone=auto")
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                var t = data && data.current && data.current.temperature_2m;
+                if (typeof t !== "number") { return; }
+                if (place.src === "geo" && data.timezone) {
+                    // Name the visitor's place from the timezone the feed
+                    // reports for their exact coordinates.
+                    var parts = String(data.timezone).split("/");
+                    var city = parts.length > 1
+                        ? parts[parts.length - 1].replace(/_/g, " ") : "";
+                    place.name = city ? "Your location near " + city
+                                      : "Your location";
+                    savePlace();
+                }
+                var seeded = false;
+                if (!userTouched) {
+                    baseC = t;
+                    jog = 0;
+                    slider.value = "0";
+                    render();
+                    seeded = true;
+                }
+                if (nowEl) {
+                    var f = (t * 9 / 5 + 32).toFixed(1);
+                    nowEl.textContent = place.name + " right now: " +
+                        t.toFixed(1) + "°C — that is " + f + "°F in American." +
+                        (seeded ? " The demo below is set to it." : "");
+                    nowEl.hidden = false;
+                }
+            })
+            .catch(function () { /* stay with the now-ish default */ });
+    }
+
+    function choosePlace(p, msg) {
+        place = p;
+        userTouched = false;
+        savePlace();
+        if (pickBox) { pickBox.hidden = true; }
+        if (pickBtn) { pickBtn.textContent = "Change place"; }
+        say(msg);
+        showWeather();
+    }
+
+    if (geoBtn) {
+        if (!("geolocation" in navigator)) { geoBtn.hidden = true; }
+        geoBtn.addEventListener("click", function () {
+            say("Asking your browser where you are. It will check with " +
+                "you first, and the answer stays between you and Open-Meteo.");
+            navigator.geolocation.getCurrentPosition(function (pos) {
+                choosePlace(
+                    { name: "Your location", lat: pos.coords.latitude,
+                      lon: pos.coords.longitude, src: "geo" },
+                    "Demo set to your location, and remembered in this browser.");
+            }, function () {
+                say("No problem, your browser kept that private. Choose a " +
+                    "place instead and we will remember it here:");
+                if (pickBox) { pickBox.hidden = false; }
+                if (locInput) { locInput.focus(); }
+            }, { timeout: 10000, maximumAge: 600000 });
+        });
+    }
+
+    if (pickBtn && pickBox) {
+        pickBtn.addEventListener("click", function () {
+            pickBox.hidden = !pickBox.hidden;
+            if (!pickBox.hidden && locInput) { locInput.focus(); }
+        });
+    }
+
+    var searchTimer = null;
+    if (locInput && locResults) {
+        locInput.addEventListener("input", function () {
+            var q = locInput.value.trim();
+            if (searchTimer) { clearTimeout(searchTimer); }
+            if (q.length < 2) { locResults.innerHTML = ""; return; }
+            searchTimer = setTimeout(function () { searchPlaces(q); }, 300);
+        });
+    }
+
+    function searchPlaces(q) {
+        fetch("https://geocoding-api.open-meteo.com/v1/search?name=" +
+              encodeURIComponent(q) + "&count=5&language=en&format=json")
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                renderResults((data && data.results) || []);
+            })
+            .catch(function () { renderResults([]); });
+    }
+
+    function renderResults(results) {
+        locResults.innerHTML = "";
+        if (!results.length) {
+            var none = document.createElement("p");
+            none.className = "TswaLocNote";
+            none.textContent = "No places matched that. Try a bigger nearby town.";
+            locResults.appendChild(none);
+            return;
+        }
+        results.forEach(function (r) {
+            var label = r.name +
+                (r.admin1 ? ", " + r.admin1 : "") +
+                (r.country ? ", " + r.country : "");
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "TswaLocResult";
+            b.textContent = label;
+            b.addEventListener("click", function () {
+                choosePlace(
+                    { name: r.name + (r.country ? ", " + r.country : ""),
+                      lat: r.latitude, lon: r.longitude, src: "search" },
+                    "Demo set to " + label + ", and remembered in this browser.");
+            });
+            locResults.appendChild(b);
+        });
+    }
+
+    var saved = loadPlace();
+    if (saved) {
+        place = saved;
+        if (pickBtn) { pickBtn.textContent = "Change place"; }
+        say("Your place: " + saved.name + ", remembered in this browser. " +
+            "The demo starts there.");
+    }
+    showWeather();
 })();
 </script>

@@ -1,8 +1,8 @@
 <div class="tswa-public">
     <p class="TswaEyebrow">TSWA · Tri-Scale Weather App</p>
     <h1>Privacy Policy</h1>
-    <p class="TswaMuted">For the TSWA Android app (com.robnugen.tswa).
-       Effective 21 November 2026.</p>
+    <p class="TswaMuted">For the TSWA Android app (com.robnugen.tswa)
+       and this website. Effective 22 November 2026.</p>
 
     <div class="TswaPanel">
         <h2>The short version</h2>
@@ -33,6 +33,16 @@
     <p>Your chosen temperature scale, the last place you viewed, and which page you
        left open are stored locally on your device, so the app reopens the way you
        left it. Uninstalling the app removes this. The developer never sees it.</p>
+
+    <h2>This website</h2>
+    <p>The converter demo on this site's home page can use your location the
+       same way the app does. If you tap "Use my location", your browser asks
+       your permission and gives the page your approximate coordinates; the
+       page sends them to Open-Meteo to fetch your local temperature, exactly
+       as the app does. If you would rather not, you can choose a place by
+       name instead. Whichever place you choose is stored in your browser
+       (local storage) so the demo starts there next time. This website's
+       server receives and stores none of it.</p>
 
     <h2>What we collect</h2>
     <p>Nothing. No personal information is collected, stored, sold, or shared by the
