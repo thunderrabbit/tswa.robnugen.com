@@ -4,5 +4,5 @@
        <a href="https://github.com/thunderrabbit/TSWA">the app</a> ·
        <a href="https://github.com/thunderrabbit/tswa.robnugen.com">this site</a>.</p>
     <p>Made in Adelaide by Rob Nugen, with Muse.
-       <a href="/privacy/">Privacy</a> · <a href="/testing/">Get the app</a></p>
+       <a href="/privacy/">Privacy</a> · <a href="https://github.com/thunderrabbit/TSWA/releases">Get the app</a></p>
 </div>

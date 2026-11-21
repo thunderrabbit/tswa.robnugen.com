@@ -14,7 +14,7 @@ $menu_admin_count = (int) ($admin_count ?? 0);
 ?>
 <div class="NavBar">
     <a href="/">Home</a> |
-    <a href="/testing/">Get the app</a> |
+    <a href="https://github.com/thunderrabbit/TSWA/releases">Get the app</a> |
     <a href="/privacy/">Privacy</a> |
     <?php if ($menu_logged_in): ?>
         <div class="dropdown">

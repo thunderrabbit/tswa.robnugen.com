@@ -107,11 +107,11 @@
            14 days</strong> before the public listing unlocks — so the first
            testers quite literally open the store. Android 8 or newer.</p>
         <p>
-            <a class="TswaBtn" href="/testing/">Join the Google Play test</a>
-            <a class="TswaBtn ghost" href="https://github.com/thunderrabbit/TSWA/releases">Download the APK from GitHub</a>
+            <a class="TswaBtn" href="https://github.com/thunderrabbit/TSWA/releases">Download the APK from GitHub</a>
         </p>
-        <p class="TswaMuted">Both routes install the same app, signed with the same
-           key. The APK works today; the Play test is what sets TSWA free.</p>
+        <p class="TswaMuted">The APK is the real app, signed with the same key the
+           Play version will use, and it works today. When the Play test opens,
+           its join link will appear here; that test is what sets TSWA free.</p>
     </div>
 
     <?php include __DIR__ . '/partials/tswa_footer.tpl.php'; ?>
