@@ -12,6 +12,7 @@ include_once $matches[1] . '/prepend.php';
  * @var \Config\Config $config
  * @var \Security\CSRFProtectaroo $csrfProtect
  * @var \Auth\IsLoggedIn $is_logged_in
+ * @var int $admin_count
  */
 
 # A Config.php written before $site_title existed should still render a page.
@@ -20,10 +21,10 @@ $site_title = $config->site_title ?? 'Site';
 
 $logged_in = $is_logged_in->isLoggedIn();
 
-$inner_page = new \View\Template(config: $config, csrf: $csrfProtect);
+$inner_page = new \View\Template(config: $config, csrf: $csrfProtect, admin_count: $admin_count);
 $inner_page->setTemplate("privacy.tpl.php");
 
-$page = new \View\Template(config: $config, csrf: $csrfProtect);
+$page = new \View\Template(config: $config, csrf: $csrfProtect, admin_count: $admin_count);
 $page->setTemplate("layout/base.tpl.php");
 $page->set("page_title", "Privacy Policy — " . $site_title);
 $page->set(
