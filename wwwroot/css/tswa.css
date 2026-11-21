@@ -1,0 +1,292 @@
+/*
+ * TSWA's public face: the pages a visitor (or a Play Store reviewer) sees
+ * logged out. Everything is scoped under .tswa-public so the member and
+ * admin pages keep the template's own theme. Colours are the app's palette
+ * (app/src/main/assets/www/index.html in the TSWA repo), so site and app
+ * read as one product.
+ */
+
+/* Page chrome, only on pages carrying public content. */
+body:has(.tswa-public) {
+    background-color: #0b1220;
+}
+
+.PageWrapper:has(> .tswa-public) {
+    max-width: 960px;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+body:has(.tswa-public) .NavBar {
+    background-color: #0e1930;
+    border-bottom-color: #24365a;
+    color: #9db1cf;
+}
+
+body:has(.tswa-public) .NavBar a {
+    color: #ffb454;
+}
+
+.tswa-public {
+    --card: #131e33;
+    --card2: #182642;
+    --line: #24365a;
+    --ink: #eef3fb;
+    --muted: #9db1cf;
+    --accent: #ffb454;
+    --accent2: #57c7ff;
+    color: var(--ink);
+    font-size: 17px;
+    padding: 1em 0.25em 2em;
+}
+
+.tswa-public p {
+    line-height: 1.65;
+}
+
+.tswa-public a {
+    color: var(--accent2);
+}
+
+.tswa-public h1 {
+    font-size: clamp(2em, 6vw, 3.1em);
+    font-weight: 650;
+    line-height: 1.12;
+    margin: 0.2em 0 0.4em;
+}
+
+.tswa-public h2 {
+    font-size: 1.45em;
+    font-weight: 650;
+    margin: 1.6em 0 0.5em;
+}
+
+.tswa-public h3 {
+    margin: 0 0 0.3em;
+    font-size: 1.05em;
+}
+
+.TswaEyebrow {
+    color: var(--accent);
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 1.2em 0 0;
+}
+
+.TswaLead {
+    font-size: 1.18em;
+    color: var(--ink);
+    max-width: 34em;
+}
+
+.TswaMuted {
+    color: var(--muted);
+}
+
+.TswaNow {
+    color: var(--accent2);
+    font-weight: 600;
+}
+
+.TswaPanel {
+    background-color: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.25em 1.4em;
+    margin: 1.5em 0;
+}
+
+.TswaPanel h2:first-child,
+.TswaPanel h3:first-child {
+    margin-top: 0;
+}
+
+.TswaBtn {
+    display: inline-block;
+    background-color: var(--accent);
+    color: #1a1206;
+    font-weight: 700;
+    padding: 0.7em 1.4em;
+    border-radius: 999px;
+    text-decoration: none;
+    margin: 0.3em 0.4em 0.3em 0;
+}
+
+.tswa-public a.TswaBtn {
+    color: #1a1206;
+}
+
+.TswaBtn.ghost {
+    background-color: transparent;
+    border: 1px solid var(--line);
+}
+
+.tswa-public a.TswaBtn.ghost {
+    color: var(--accent2);
+}
+
+/* The converter demo: the app's second page, live in the browser. */
+.TswaDemoTemp {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+    font: inherit;
+    font-size: clamp(64px, 17vw, 96px);
+    font-weight: 300;
+    line-height: 1.05;
+    padding: 0.05em 0;
+    text-align: center;
+}
+
+.TswaDemoTemp .unit {
+    font-size: 0.42em;
+    font-weight: 400;
+    color: var(--muted);
+    vertical-align: 0.9em;
+}
+
+.TswaVerdict {
+    text-align: center;
+    min-height: 3.2em;
+}
+
+.TswaVerdict .title {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.TswaVerdict .desc {
+    color: var(--muted);
+}
+
+.TswaSliderWrap {
+    position: relative;
+    padding: 0.4em 0.2em 0;
+}
+
+.TswaSliderWrap::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 10px;
+    background-color: var(--muted);
+}
+
+.TswaSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    outline: none;
+}
+
+.TswaSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: var(--ink);
+    border: 3px solid var(--accent);
+    cursor: pointer;
+}
+
+.TswaSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--ink);
+    border: 3px solid var(--accent);
+    cursor: pointer;
+}
+
+.TswaHint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.92em;
+}
+
+.TswaChips {
+    text-align: center;
+    margin-top: 0.6em;
+}
+
+.TswaChip {
+    background-color: var(--card2);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35em 0.9em;
+    margin: 0.2em;
+    font: inherit;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.TswaChip:hover,
+.TswaChip:focus-visible {
+    border-color: var(--accent);
+}
+
+.TswaGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1em;
+    margin: 1.5em 0;
+}
+
+.TswaFeature {
+    background-color: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1em 1.15em;
+}
+
+.TswaFeature p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.TswaShot {
+    text-align: center;
+    margin: 1.5em 0;
+}
+
+.TswaShot img {
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+.TswaShot figcaption {
+    color: var(--muted);
+    font-size: 0.92em;
+    max-width: 36em;
+    margin: 0.7em auto 0;
+    line-height: 1.55;
+}
+
+.TswaSteps li {
+    line-height: 1.6;
+    margin-bottom: 0.7em;
+}
+
+.TswaFooter {
+    border-top: 1px solid var(--line);
+    margin-top: 2.5em;
+    padding-top: 1em;
+    color: var(--muted);
+    font-size: 0.9em;
+}
