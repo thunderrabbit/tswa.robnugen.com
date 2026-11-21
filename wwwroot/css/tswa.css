@@ -91,6 +91,84 @@ body:has(.tswa-public) .NavBar a {
     font-weight: 600;
 }
 
+/* The location bar: set the demo to the visitor's own place. */
+.TswaLoc {
+    margin: 0.8em 0 0;
+}
+
+.TswaLocMsg {
+    color: var(--muted);
+    margin: 0.3em 0;
+}
+
+.TswaLocBtns {
+    margin: 0.3em 0;
+}
+
+.TswaLocBtn {
+    background-color: transparent;
+    color: var(--accent2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.45em 1.1em;
+    margin: 0.2em 0.3em 0.2em 0;
+    font: inherit;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.TswaLocBtn:hover,
+.TswaLocBtn:focus-visible {
+    border-color: var(--accent);
+}
+
+.TswaLocInput {
+    width: 100%;
+    max-width: 26em;
+    background-color: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.55em 0.8em;
+    font: inherit;
+    margin-top: 0.4em;
+}
+
+.TswaLocInput:focus {
+    outline: none;
+    border-color: var(--accent2);
+}
+
+.TswaLocResults {
+    margin-top: 0.4em;
+}
+
+.TswaLocResult {
+    display: block;
+    background-color: var(--card2);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.5em 0.9em;
+    margin: 0.25em 0;
+    font: inherit;
+    font-size: 0.95em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.TswaLocResult:hover,
+.TswaLocResult:focus-visible {
+    border-color: var(--accent);
+}
+
+.TswaLocNote {
+    color: var(--muted);
+    font-size: 0.85em;
+    margin: 0.4em 0;
+}
+
 .TswaPanel {
     background-color: var(--card);
     border: 1px solid var(--line);
