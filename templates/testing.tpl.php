@@ -10,8 +10,9 @@
     <div class="TswaPanel">
         <h2>How to join</h2>
         <ol class="TswaSteps">
-            <li><strong>Opt in.</strong> Tap the button below and accept with the
-                Google account that is on your Android phone.</li>
+            <li><strong>Opt in.</strong> When the test opens, tap the join button
+                that will appear below and accept with the Google account that is
+                on your Android phone.</li>
             <li><strong>Install TSWA</strong> from the Play Store page the test
                 offers you. It is the real app, signed and updated like any other.</li>
             <li><strong>Stay opted in for 14 days.</strong> Leaving early restarts
@@ -21,12 +22,15 @@
                 group chat turns to the heat in Adelaide, this is your moment. Tell
                 Rob what feels off — screenshots welcome.</li>
         </ol>
+        <p class="TswaMuted"><strong>The test is not open yet.</strong> Our Google
+           Play developer account is still being set up, so there is no test to
+           join today. The join button will appear here the moment the test
+           track exists.</p>
         <p>
-            <a class="TswaBtn" href="https://play.google.com/apps/testing/com.robnugen.tswa">Join the test on Google Play</a>
+            <a class="TswaBtn" href="https://github.com/thunderrabbit/TSWA/releases">Get the same app now from GitHub</a>
         </p>
-        <p class="TswaMuted">The closed test is being set up now. If the Join button
-           says the app is not available yet, check back in a day or so — or grab the
-           APK below in the meantime.</p>
+        <p class="TswaMuted">The APK is the real app, signed with the same key.
+           It just does not count toward the 12 testers; only Play testers do.</p>
     </div>
 
     <h2>Good to know</h2>
