@@ -49,7 +49,6 @@ if ($is_logged_in->isLoggedIn()) {
     // Logged out - same layout and menu, with a way in
     $inner_page = new \View\Template(config: $config, csrf: $csrfProtect, admin_count: $admin_count);
     $inner_page->setTemplate("welcome.tpl.php");
-    $inner_page->set("site_title", $site_title);
 
     $page = new \View\Template(config: $config, csrf: $csrfProtect, admin_count: $admin_count);
     $page->setTemplate("layout/base.tpl.php");
