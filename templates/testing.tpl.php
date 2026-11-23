@@ -1,5 +1,5 @@
 <div class="tswa-public">
-    <p class="TswaEyebrow">TSWA · Tri-Scale Weather App</p>
+    <p class="TswaEyebrow">TSWA · Two Skies Weather App</p>
     <h1>Help TSWA reach the Play Store</h1>
     <p class="TswaLead">Google has a rule for brand-new developers: before a personal
        developer account may publish, the app must run a <strong>closed test with at

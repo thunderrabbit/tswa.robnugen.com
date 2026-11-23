@@ -1,5 +1,5 @@
 <div class="tswa-public">
-    <p class="TswaEyebrow">TSWA · Tri-Scale Weather App</p>
+    <p class="TswaEyebrow">TSWA · Two Skies Weather App</p>
     <h1>Privacy Policy</h1>
     <p class="TswaMuted">For the TSWA Android app (com.robnugen.tswa)
        and this website. Effective 22 November 2026.</p>
