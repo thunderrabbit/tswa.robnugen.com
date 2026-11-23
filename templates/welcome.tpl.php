@@ -1,6 +1,6 @@
 <div class="tswa-public">
     <p class="TswaEyebrow">TSWA · Two Skies Weather App</p>
-    <h1>Weather in °C, °F and K.<br>One tap apart.</h1>
+    <h1>Weather in four scales.<br>One tap apart.</h1>
     <p class="TswaLead">Google's weather app takes <strong>four taps</strong> to change
        temperature scale. TSWA takes <strong>one</strong>. When family in the US asks how
        hot Adelaide is, &ldquo;30 degrees&rdquo; should not need a follow-up question —
