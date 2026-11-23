@@ -183,4 +183,31 @@ class TemplateTest extends Unit
 
         $this->assertStringContainsString('href="/login/"', $layout->grabTheGoods());
     }
+
+    public function testWelcomeRendersWithNothingSet(): void
+    {
+        // The logged-out home page in wwwroot/index.php sets no variables on it.
+        $page = $this->template();
+        $page->setTemplate("welcome.tpl.php");
+
+        $html = $page->grabTheGoods();
+
+        $this->assertStringContainsString('<h1>', $html);
+        $this->assertStringContainsString('href="/privacy/"', $html);
+        $this->assertStringContainsString('href="https://github.com/thunderrabbit/TSWA/releases"', $html);
+    }
+
+    public function testWelcomeScriptFindsEveryElementItLooksUp(): void
+    {
+        $page = $this->template();
+        $page->setTemplate("welcome.tpl.php");
+
+        $html = $page->grabTheGoods();
+        preg_match_all('/getElementById\("([^"]+)"\)/', $html, $lookups);
+
+        $this->assertNotEmpty($lookups[1], 'the demo script should look elements up by id');
+        foreach ($lookups[1] as $id) {
+            $this->assertStringContainsString('id="' . $id . '"', $html, "the demo script needs #$id");
+        }
+    }
 }
